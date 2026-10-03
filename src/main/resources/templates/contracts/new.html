@@ -22,15 +22,18 @@
     <label>開始日<br><input type="date" name="startDate" required></label><br><br>
     <label>満期日<br><input type="date" name="endDate" required></label><br><br>
     <script>
-     function calcPremium() {
+function calcPremium() {
   const grade = parseInt(document.querySelector('[name="grade"]').value);
   const age = parseInt(document.querySelector('[name="age"]').value);
   let base = 0;
-  if (age <= 25) base = 45000;
+  if (age <= 20) base = 60000;
+  else if (age <= 25) base = 45000;
+  else if (age <= 29) base = 35000;
   else if (age <= 39) base = 28000;
   else if (age <= 49) base = 22000;
   else if (age <= 59) base = 20000;
-  else base = 25000;
+  else if (age <= 69) base = 25000;
+  else base = 30000;
   let discount = 0;
   if (grade >= 16) discount = 0.4;
   else if (grade >= 11) discount = 0.3;

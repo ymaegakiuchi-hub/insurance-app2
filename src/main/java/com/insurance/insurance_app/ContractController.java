@@ -33,19 +33,16 @@ public class ContractController {
                                  @RequestParam String endDate,
                                  Model model) {
 
-        // 年齢による基本保険料（5段階）
+        // 年齢による基本保険料（8段階）
         double basePremium;
-        if (age <= 25) {
-            basePremium = 45000;
-        } else if (age <= 39) {
-            basePremium = 28000;
-        } else if (age <= 49) {
-            basePremium = 22000;
-        } else if (age <= 59) {
-            basePremium = 20000;
-        } else {
-            basePremium = 25000;
-        }
+        if (age <= 20) basePremium = 60000;
+        else if (age <= 25) basePremium = 45000;
+        else if (age <= 29) basePremium = 35000;
+        else if (age <= 39) basePremium = 28000;
+        else if (age <= 49) basePremium = 22000;
+        else if (age <= 59) basePremium = 20000;
+        else if (age <= 69) basePremium = 25000;
+        else basePremium = 30000;
 
         // 等級による割引率
         double discountRate;

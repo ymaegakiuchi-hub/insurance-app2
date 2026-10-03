@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>満期が近い契約</title>
+</head>
+<body>
+  <h1>満期が近い契約（30日以内）</h1>
+  <p th:if="${#lists.isEmpty(contracts)}">満期が近い契約はありません。</p>
+  <div th:each="contract : ${contracts}">
+    <p>
+      顧客名：<span th:text="${contract.customer.name}"></span><br>
+      保険種別：<span th:text="${contract.insuranceType}"></span><br>
+      保険料：<span th:text="${contract.premium}"></span>円<br>
+      満期日：<span th:text="${contract.endDate}"></span>
+    </p>
+    <hr>
+  </div>
+  <a href="/">戻る</a>
+</body>
+</html>

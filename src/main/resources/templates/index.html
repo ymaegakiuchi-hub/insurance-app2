@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>保険契約管理アプリ</title>
+</head>
+<body>
+  <h1>保険契約管理アプリ</h1>
+  <h2>顧客登録</h2>
+  <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+  <form action="/customers" method="post" th:object="${customer}">
+    <label>氏名<br><input th:field="*{name}" placeholder="例：田中太郎" required></label><br><br>
+    <label>メールアドレス<br><input th:field="*{email}" placeholder="例：tanaka@example.com"></label><br><br>
+    <label>電話番号<br><input th:field="*{phone}" placeholder="例：090-1234-5678"></label><br><br>
+    <label>生年月日<br><input type="date" th:field="*{birthdate}" required></label><br><br>
+    <button type="submit">登録する</button>
+  </form>
+  <br>
+  <a href="/customers">顧客一覧を見る</a>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>契約一覧</title>
+</head>
+<body>
+  <h1>契約一覧</h1>
+  <div th:each="contract : ${contracts}">
+    <p>
+      顧客名：<span th:text="${contract.customer.name}"></span><br>
+      保険種別：<span th:text="${contract.insuranceType}"></span><br>
+      保険料：<span th:text="${contract.premium}"></span>円<br>
+      開始日：<span th:text="${contract.startDate}"></span><br>
+      満期日：<span th:text="${contract.endDate}"></span>
+    </p>
+    <hr>
+  </div>
+  <a href="/">戻る</a>
+</body>
+</html>

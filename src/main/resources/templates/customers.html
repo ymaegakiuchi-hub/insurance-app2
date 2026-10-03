@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>顧客一覧</title>
+</head>
+<body>
+  <h1>顧客一覧</h1>
+  <div th:each="customer : ${customers}">
+    <p>
+      氏名：<span th:text="${customer.name}"></span><br>
+      メール：<span th:text="${customer.email}"></span><br>
+      電話：<span th:text="${customer.phone}"></span>
+    </p>
+    <hr>
+  </div>
+  <a href="/">戻る</a>
+</body>
+</html>

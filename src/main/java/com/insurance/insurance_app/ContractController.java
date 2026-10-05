@@ -27,14 +27,31 @@ public class ContractController {
     }
 
     @PostMapping("/contracts")
-    public String createContract(@RequestParam Long customerId,
-                                 @RequestParam String insuranceType,
-                                 @RequestParam Integer age,
-                                 @RequestParam Integer grade,
-                                 @RequestParam String startDate,
-                                 @RequestParam String endDate,
-                                 Model model) {
+ public String createContract(@RequestParam Long customerId,
+     @RequestParam String insuranceType,
+     @RequestParam Integer age,
+     @RequestParam Integer grade,
+     @RequestParam String startDate,
+     @RequestParam String endDate,
+     Model model) {
 
+     // サーバー側の入力チェック
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        String error = null;
+        if (age > 70) {
+            error = "年齢は70歳以下で入力してください";
+        } else if (grade < 1 || grade > 20) {
+            error = "等級は1〜20の範囲で入力してください";
+        } else if (end.isBefore(start)) {
+            error = "満期日は開始日以降の日付を入力してください";
+        }
+        if (error != null) {
+            model.addAttribute("error", error);
+            model.addAttribute("inputAge", age);
+            model.addAttribute("customers", customerRepository.findAll());
+            return "contracts/new";
+        }
         // 年齢による基本保険料（8段階）
         BigDecimal basePremium;
         if (age <= 20) basePremium = new BigDecimal("60000");

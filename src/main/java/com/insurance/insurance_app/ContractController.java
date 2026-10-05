@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 @Controller
@@ -34,30 +36,33 @@ public class ContractController {
                                  Model model) {
 
         // 年齢による基本保険料（8段階）
-        double basePremium;
-        if (age <= 20) basePremium = 60000;
-        else if (age <= 25) basePremium = 45000;
-        else if (age <= 29) basePremium = 35000;
-        else if (age <= 39) basePremium = 28000;
-        else if (age <= 49) basePremium = 22000;
-        else if (age <= 59) basePremium = 20000;
-        else if (age <= 69) basePremium = 25000;
-        else basePremium = 30000;
+        BigDecimal basePremium;
+        if (age <= 20) basePremium = new BigDecimal("60000");
+        else if (age <= 25) basePremium = new BigDecimal("45000");
+        else if (age <= 29) basePremium = new BigDecimal("35000");
+        else if (age <= 39) basePremium = new BigDecimal("28000");
+        else if (age <= 49) basePremium = new BigDecimal("22000");
+        else if (age <= 59) basePremium = new BigDecimal("20000");
+        else if (age <= 69) basePremium = new BigDecimal("25000");
+        else basePremium = new BigDecimal("30000");
 
         // 等級による割引率
-        double discountRate;
+        BigDecimal discountRate;
         if (grade <= 5) {
-            discountRate = 0;
+            discountRate = new BigDecimal("0");
         } else if (grade <= 10) {
-            discountRate = 0.20;
+            discountRate = new BigDecimal("0.20");
         } else if (grade <= 15) {
-            discountRate = 0.30;
+            discountRate = new BigDecimal("0.30");
         } else {
-            discountRate = 0.40;
+            discountRate = new BigDecimal("0.40");
         }
 
-        // 保険料計算（double で計算して小数点以下を切り捨て）
-        int premium = (int) Math.floor(basePremium * (1 - discountRate));
+        // 保険料計算（BigDecimal で計算して、1円未満は切り捨て）
+        int premium = basePremium
+                .multiply(BigDecimal.ONE.subtract(discountRate))
+                .setScale(0, RoundingMode.DOWN)
+                .intValue();
 
         Contract contract = new Contract();
         contract.setCustomer(customerRepository.findById(customerId).orElseThrow());

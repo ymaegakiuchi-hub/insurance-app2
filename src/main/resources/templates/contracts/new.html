@@ -34,11 +34,11 @@ function calcPremium() {
   else if (age <= 59) base = 20000;
   else if (age <= 69) base = 25000;
   else base = 30000;
-  let discount = 0;
-  if (grade >= 16) discount = 0.4;
-  else if (grade >= 11) discount = 0.3;
-  else if (grade >= 6) discount = 0.2;
-  document.querySelector('[name="premium"]').value = Math.floor(base * (1 - discount));
+  let discountPercent = 0;
+  if (grade >= 16) discountPercent = 40;
+  else if (grade >= 11) discountPercent = 30;
+  else if (grade >= 6) discountPercent = 20;
+  document.querySelector('[name="premium"]').value = Math.floor(base * (100 - discountPercent) / 100);
 }
     </script>
     <button type="submit">登録する</button>
